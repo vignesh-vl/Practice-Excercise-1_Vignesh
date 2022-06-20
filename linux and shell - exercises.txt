@@ -1,0 +1,132 @@
+1.Create an file named file.txt, create an user sampleuser. Change the ownership of the file to sampleuser
+
+Commands:
+
+touch file.txt
+useradd  sample_user
+sudo chown sample_user : sample_user file.txt
+
+2. Switch to sample user in terminal then change the permission of the file.txt to the user and group as rwx
+
+Commands:
+
+su sample_user
+sudo chmod  u+rwx file.txt
+sudo chmod  g+rwx file.txt
+
+3. Increase the open file limit 
+
+Commands: 
+
+ulimit -a
+ulimit -n 12345
+
+4. Increase the swapsize by adding new swap storage
+
+Commands :
+
+* Creating and adding swap file
+
+        sudo fallocate -l 1G /swapfile
+        sudo chmod 600 swapfile
+        sudo mkswap /swapfile
+        sudo swapon  /swapfile
+
+* Increasing the size of already existing swapfile
+
+	sudo swapoff /swapfile
+	sudo fallocate -l 4G /swapfile
+	sudo mkswap /swapfile
+	sudo swapon /swapfile
+
+* Removing the  swap storage
+
+	sudo swapoff /swapfile
+	sudo rm /swapfile
+	sudo –show (to check whether the swap memory is removed or not)
+
+5. Write an script that will read the file content.txt that contains the names,age,job title and print the value in this order “name(age) – jobtitle”
+
+Contents.txt file contents
+
+Raj 30 Developer
+Ram 25 Ops
+Gokul 21 Intern
+Sundar 45 CEO
+Anil 38 SRE
+
+Commands: 
+
+Script.sh
+
+while read -a  line ; do
+ echo ${line[o]}”(“${line[1]}”)”${line[2]}
+
+6. Write an script that will get the company name as arguments(command line arguments) and print their products by parsing the following json file
+
+{
+
+“Ibm”: [“RedHat”,”Mainframe”,”IBM cloud”,”RHEL”],
+“google”: [“k8s”,”kaggle”,”firebase”],
+“microsoft”: [“windows”,”azure”,”office365”],
+“amazon”: [“AWS”,”AWS Gov”,”Amplify”],
+“softwareag”: [“webmethods”,”AIRS”,”ADABAS”,”CumIOT”]
+
+}
+
+Commands:
+
+touch file.json
+./sript.sh Ibm
+
+Script.sh: 
+
+cat file.json |jq-c “.$1”
+
+7.Create an script that will calculate the sum of prime numbers between 0 to an given number(to be given as an argument) name it child.sh, create another script named parent.sh which check if the child script exists in current dir and if exists change permission to execute for current user and call the child script from the parent script passing the number as argument
+
+Parent.sh
+
+If [-e “child.sh ]
+then
+sudo chmod a+x  child.sh
+  ./child.sh 12
+else
+ echo "child.sh not exist in current directory" 
+fi
+
+child.sh
+
+sum=0
+count=0
+for (( i=2;i<=$1;i++ ))
+do
+ count=0
+ for(( j=2;j<$i;j++ ))
+ do
+  if (( $i % j == 0 ))
+  then
+      count=1
+      # echo $i
+  fi
+ done
+ if (( $count == 0 ))
+ then 
+    sum=$((sum+i))
+ fi
+done   
+echo $sum
+
+
+8.Install the apache httpd server(centos preferred), and the home page should say “SoftwareAG”
+
+Commands :
+
+sudo apt-get install apache2
+
+cd  /var/www/html
+
+
+
+
+
