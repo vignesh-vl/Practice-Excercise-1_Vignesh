@@ -1,0 +1,17 @@
+version: '2.0'
+services:
+  nginx:
+   image : nginx
+   ports:
+    - "85:80"
+   networks:
+    - my_networks 
+  redis:
+   image : redis
+   ports:
+    - "3000:6379"
+   networks:
+    - my_networks 
+networks: 
+  my_networks : 
+    
